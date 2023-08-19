@@ -1,0 +1,7 @@
+ --- Biglake table. contains lookup info for payment type
+config {
+ type: "declaration",
+ database: "lufeng-demo",
+ schema: "dataform_demo",
+ name: "biglake_payment_type"
+}
