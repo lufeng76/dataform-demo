@@ -1,0 +1,30 @@
+/*
+Final step in the pipeline.
+Creates a summary table.
+Query joins the view results with a lookeup table for payment type (which is a BigLake table) 
+*/
+
+config {
+ type: "table",
+ schema: "dataform_demo",
+ tags: ["reporting", "taxi"],
+ description: "Combine taxi grouped data with payment lookup",
+ columns: {
+   ride_id: `A unique identifier for a ride`,
+   meter_cost: `Total cost for a specific ride`,
+ },
+
+
+  bigquery: {
+   partitionBy: "DATETIME_TRUNC(start_time, HOUR)"
+ },
+  assertions: {
+   uniqueKey: ["ride_id"],
+   nonNull: ["ride_id", "start_time"]
+ }
+}
+
+
+select taxi.*, payment.payment_type_descryption
+from ${ref("rides_group_data")} taxi join ${ref("biglake_payment_type")} payment
+on taxi.payment_type_id=payment.payment_type_id
