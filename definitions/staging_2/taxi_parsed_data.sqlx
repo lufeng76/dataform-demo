@@ -4,7 +4,7 @@ takes events json data from taxi_trips_pub_sub table and parse the json into col
 config {
  type: "incremental", /*builds the incremental table from scratch only for the first time. During subsequent executions, Dataform only inserts or merges new rows into the incremental table according to the conditions that you configure. */
  schema: "dataform_demo",
- tags: ["staging"], /*To organize components of your SQL workflow into collections, you can add custom tags*/
+ tags: ["staging", "taxi"], /*To organize components of your SQL workflow into collections, you can add custom tags*/
  description: "Parse raw data into columns", /*Dataform allows you to add documentation to the table/columns*/
   bigquery: {
    partitionBy: 'DATETIME_TRUNC(timestamp, HOUR)'
